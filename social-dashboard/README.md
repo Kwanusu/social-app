@@ -1,16 +1,90 @@
-# React + Vite
+# Enterprise Social Media Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A high-performance, real-time social media dashboard built using the modern React ecosystem. This application features complex data orchestration, secure multi-provider authentication, and a fully responsive, themeable UI.
 
-Currently, two official plugins are available:
+## Key Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* **Secure Authentication:** Multi-provider login (Google OAuth & Email/Password) powered by Firebase, including a full password recovery flow.
+* **Intelligent Data Management:** Utilizes **Redux Toolkit Query** for server-state management, featuring automatic caching, polling, and optimistic UI updates.
+* **Dynamic Analytics:** A dedicated analytics dashboard that derives real-time insights (engagement rates, post-performance) from cached API data.
+* **Advanced Filtering:** Real-time client-side search and filtering logic for social feeds.
+* **Adaptive Theming:** System-aware Light/Dark mode with persistent user preference storage.
+* **Protected Routing:** Robust client-side routing with specialized Layout wrappers and Authentication Guards.
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Layer | Technology | Purpose |
+| --- | --- | --- |
+| **Frontend** | React 18 (Vite) | Core UI Framework |
+| **State Management** | Redux Toolkit (RTK Query) | Global State & API Caching |
+| **Authentication** | Firebase Auth | Identity Management |
+| **Routing** | React Router 6 | SPAs Navigation & Route Guarding |
+| **Styling** | Tailwind CSS | Utility-first responsive design |
+| **Icons** | Lucide React | Consistent iconography |
+| **Deployment** | Vercel | Production Hosting |
 
-## Expanding the ESLint configuration
+## Project Structure
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```text
+src/
+├── api/            # RTK Query API slices
+├── components/     # UI components (Sidebar, ProtectedRoute, Layout)
+├── context/        # Theme & Global UI Context
+├── pages/          # Dashboard Views (Feed, Analytics, Profile, Auth)
+├── store/          # Redux Store configuration
+└── firebase.js     # Firebase SDK initialization
+
+```
+
+## Installation & Setup
+
+### 1. Prerequisites
+
+* Node.js (v18+)
+* Firebase Project
+
+### 2. Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
+VITE_FIREBASE_API_KEY=your_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
+VITE_FIREBASE_PROJECT_ID=your_project_id
+VITE_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+VITE_FIREBASE_APP_ID=your_app_id
+
+```
+
+### 3. Setup Commands
+
+```bash
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
+
+# Build for production
+npm run build
+
+```
+
+## Design Philosophy
+
+### **State Separation**
+
+The app follows a strict state-separation rule:
+
+* **Server State:** Handled by RTK Query to ensure data synchronization and minimize network overhead.
+* **Global UI State:** Managed via Context API for lightweight tasks like theme toggling.
+* **Local State:** Managed via `useState` for transient form inputs and UI toggles.
+
+### **Client-Side Optimization**
+
+By utilizing `useMemo` for search filtering and RTK Query's caching mechanisms, the application maintains a 60fps UI performance even when processing large API datasets.
+
+## License
+
+This project is open-source and available under the MIT License.
