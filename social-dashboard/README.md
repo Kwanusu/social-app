@@ -1,90 +1,67 @@
-# Enterprise Social Media Dashboard
+# Modern Social Dashboard & Analytics
 
-A high-performance, real-time social media dashboard built using the modern React ecosystem. This application features complex data orchestration, secure multi-provider authentication, and a fully responsive, themeable UI.
+A high-performance social dashboard built with React, Firebase, and Tailwind CSS. This application features a real-time global state, authenticated routes, and a responsive design with Dark Mode support.
 
 ## Key Features
 
-* **Secure Authentication:** Multi-provider login (Google OAuth & Email/Password) powered by Firebase, including a full password recovery flow.
-* **Intelligent Data Management:** Utilizes **Redux Toolkit Query** for server-state management, featuring automatic caching, polling, and optimistic UI updates.
-* **Dynamic Analytics:** A dedicated analytics dashboard that derives real-time insights (engagement rates, post-performance) from cached API data.
-* **Advanced Filtering:** Real-time client-side search and filtering logic for social feeds.
-* **Adaptive Theming:** System-aware Light/Dark mode with persistent user preference storage.
-* **Protected Routing:** Robust client-side routing with specialized Layout wrappers and Authentication Guards.
+* Multi-Method Authentication: Secure Login and Registration via Email/Password and Google OAuth.
+* Real-time Feed: Fetches community posts using RTK Query for efficient caching and state management.
+* Global Toast System: Custom-built notification system using React Context API for non-intrusive user feedback.
+* Dynamic User Profiles: Editable profiles with real-time updates across the app using Firebase profile syncing.
+* Settings Hub: Integrated theme switching and notification preferences.
+* Social Interactions: Local state simulation for liking posts and subscribing to users with instant feedback.
+* Secure Routing: Protected routes to prevent unauthorized access to private data.
 
 ## Tech Stack
 
-| Layer | Technology | Purpose |
-| --- | --- | --- |
-| **Frontend** | React 18 (Vite) | Core UI Framework |
-| **State Management** | Redux Toolkit (RTK Query) | Global State & API Caching |
-| **Authentication** | Firebase Auth | Identity Management |
-| **Routing** | React Router 6 | SPAs Navigation & Route Guarding |
-| **Styling** | Tailwind CSS | Utility-first responsive design |
-| **Icons** | Lucide React | Consistent iconography |
-| **Deployment** | Vercel | Production Hosting |
+| Technology | Purpose |
+| --- | --- |
+| React 18 | Frontend Framework |
+| Firebase Auth | User Security & Session Management |
+| Redux Toolkit | State management & API interaction (RTK Query) |
+| Tailwind CSS | Modern styling and Dark Mode |
+| Lucide React | Consistent iconography |
+| React Router v6 | Navigation and Route protection |
 
-## Project Structure
-
-```text
-src/
-├── api/            # RTK Query API slices
-├── components/     # UI components (Sidebar, ProtectedRoute, Layout)
-├── context/        # Theme & Global UI Context
-├── pages/          # Dashboard Views (Feed, Analytics, Profile, Auth)
-├── store/          # Redux Store configuration
-└── firebase.js     # Firebase SDK initialization
-
-```
-
-## Installation & Setup
+## Getting Started
 
 ### 1. Prerequisites
 
-* Node.js (v18+)
-* Firebase Project
+* Node.js (v16+)
+* A Firebase Project
 
-### 2. Environment Variables
+### 2. Installation
 
-Create a `.env` file in the root directory:
+```bash
+git clone https://github.com/yourusername/social-dashboard.git
+npm install
+npm run dev
+
+```
+
+### 3. Environment Setup
+
+Create a .env file in the root directory and add your Firebase credentials:
 
 ```env
 VITE_FIREBASE_API_KEY=your_api_key
-VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
+VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
 VITE_FIREBASE_PROJECT_ID=your_project_id
-VITE_FIREBASE_STORAGE_BUCKET=your_storage_bucket
-VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-VITE_FIREBASE_APP_ID=your_app_id
 
 ```
 
-### 3. Setup Commands
+## Component Structure
 
-```bash
-# Install dependencies
-npm install
+* src/context/: Global states (Theme, Toast, Auth).
+* src/components/: Reusable UI elements (Buttons, Inputs, Modals, Toasts).
+* src/pages/: Main views (Feed, Profile, Settings, Login).
+* src/store/: Redux logic and API slices.
 
-# Start the development server
-npm run dev
+## Roadmap
 
-# Build for production
-npm run build
-
-```
-
-## Design Philosophy
-
-### **State Separation**
-
-The app follows a strict state-separation rule:
-
-* **Server State:** Handled by RTK Query to ensure data synchronization and minimize network overhead.
-* **Global UI State:** Managed via Context API for lightweight tasks like theme toggling.
-* **Local State:** Managed via `useState` for transient form inputs and UI toggles.
-
-### **Client-Side Optimization**
-
-By utilizing `useMemo` for search filtering and RTK Query's caching mechanisms, the application maintains a 60fps UI performance even when processing large API datasets.
-
-## License
-
-This project is open-source and available under the MIT License.
+* Integrate Firebase Authentication
+* Implement Global Toast Notifications
+* Add Dark Mode support
+* Implement Protected Route Wrapper
+* Connect Firestore for persistent likes
+* Add real-time chat functionality
