@@ -35,7 +35,9 @@ const Feed = () => {
   if (error) return <div className="text-center p-10 text-red-500 font-medium">Error loading feed.</div>;
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6 pb-20 px-4">
+    <div className="sticky top-4 z-20 transition-all duration-300 
+                bg-white/80 dark:bg-gray-900/80 backdrop-blur-md 
+                p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800">
       {/* Header & Search */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md p-4 rounded-2xl sticky top-4 z-20 shadow-sm border border-gray-100 dark:border-gray-800">
         <h1 className="text-xl font-extrabold text-gray-900 dark:text-white tracking-tight">Community Feed</h1>

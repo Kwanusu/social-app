@@ -13,7 +13,9 @@ const PostCard = ({ post, isLiked, isSubscribed, toggleLike, toggleSubscribe }) 
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <article className="group bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition-all overflow-hidden">
+    <article className="group bg-white dark:bg-gray-800 border-gray-100 dark:border-gray-700 
+                   transition-all duration-300 ease-in-out 
+                   rounded-2xl border shadow-sm hover:shadow-md overflow-hidden">
       <div className="flex flex-col md:flex-row">
         
         {/* Left: Image Section */}
