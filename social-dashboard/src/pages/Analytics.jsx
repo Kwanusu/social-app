@@ -1,12 +1,12 @@
 import React from 'react';
 import { useGetPostsQuery, useGetUserQuery } from '../store/apiSlice';
+import { auth } from '../firebase'; 
 import { 
   BarChart3, 
   Users, 
   MessageSquare, 
   TrendingUp, 
   Target, 
-  Smile 
 } from 'lucide-react';
 import { 
   BarChart, 
@@ -20,15 +20,21 @@ import {
 import Spinner from '../components/Spinner';
 
 const Analytics = () => {
+  // 1. Get the current authenticated user's ID
+  // If your API uses numeric IDs from a mock DB, keep the fallback as 1
+  // If using Firebase IDs, ensure your apiSlice handles string IDs
+  const currentUserId = auth.currentUser?.uid || 1;
+
+  // 2. Fetch data using the dynamic ID
   const { data: posts, isLoading: postsLoading, error: postsError } = useGetPostsQuery();
-  const { data: user, isLoading: userLoading } = useGetUserQuery(1);
+  const { data: user, isLoading: userLoading } = useGetUserQuery(currentUserId);
 
   if (postsError) {
     console.error("Posts Fetch Error:", postsError);
     return <div className="p-20 text-center dark:text-white">Error loading analytics data.</div>;
   }
 
-  if (postsLoading || userLoading) return <Spinner />;
+  if (postsLoading || userLoading) return <div className="flex justify-center py-20"><Spinner /></div>;
 
   if (!posts || posts.length === 0) {
     return <div className="p-20 text-center text-gray-500">No post data found.</div>;
@@ -40,13 +46,11 @@ const Analytics = () => {
     posts.reduce((acc, post) => acc + (post.body?.length || 0), 0) / totalPosts
   );
 
-  // --- THE FIX: Define chartData here ---
   const chartData = posts.slice(0, 8).map(post => ({
     name: `Post ${post.id}`,
     engagement: post.body?.length || 0,
     reach: Math.floor(Math.random() * 500) + 100
   }));
-  // --------------------------------------
 
   const stats = [
     { label: 'Total Posts', value: totalPosts, icon: <MessageSquare className="text-blue-500" />, trend: '+12%' },
@@ -60,7 +64,10 @@ const Analytics = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold text-gray-800 dark:text-white">Analytics Overview</h1>
-          <p className="text-gray-500 dark:text-gray-400">Welcome back, <span className="text-blue-600 font-semibold">{JSON.stringify(user?.name) || 'User'}</span>.</p>
+          {/* Fixed the JSON.stringify issue here */}
+          <p className="text-gray-500 dark:text-gray-400 mt-1">
+            Welcome back, <span className="text-blue-600 font-semibold">{user?.name || 'User'}</span>.
+          </p>
         </div>
         <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-xl transition-all shadow-lg shadow-blue-500/20 font-medium">
           Generate Report
@@ -93,14 +100,22 @@ const Analytics = () => {
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
                 <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 12}} dy={10} />
                 <YAxis hide />
-                <Tooltip cursor={{fill: '#f8fafc'}} contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }} />
+                <Tooltip 
+                  cursor={{fill: '#f8fafc'}} 
+                  contentStyle={{ 
+                    borderRadius: '16px', 
+                    border: 'none', 
+                    boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)',
+                    backgroundColor: 'rgba(255, 255, 255, 0.9)'
+                  }} 
+                />
                 <Bar dataKey="engagement" fill="#3b82f6" radius={[6, 6, 0, 0]} barSize={40} />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </div>
 
-        {/* Reach Card */}
+        {/* Device Reach Card */}
         <div className="bg-white dark:bg-gray-800 p-8 rounded-3xl border border-gray-100 dark:border-gray-700 shadow-sm">
           <h3 className="font-bold mb-6 text-gray-900 dark:text-white flex items-center gap-2">
             <Target size={20} className="text-blue-500" /> Device Reach
