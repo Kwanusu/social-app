@@ -11,6 +11,7 @@ import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
 import ProtectedRoute from "./components/ProtectedRoute";
 import  Settings  from "./pages/Settings";
+import ChatBox from "./components/ChatBox.jsx";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
               <Route path="/" element={<MainLayout />}>
                 <Route index element={<Navigate to="/feed" replace/>} />
                 <Route path="feed" element={<Feed />} />
+                <Route path="chat" element={<ChatBox />} />
                 <Route path="analytics" element={<Analytics />} />
                 <Route path="profile" element={<Profile />} />
                 <Route path="/settings" element={<Settings />} />

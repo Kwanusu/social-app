@@ -10,7 +10,8 @@ import {
   Moon, 
   Settings, 
   Menu, 
-  X 
+  X, 
+  MessageSquare
 } from 'lucide-react';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
@@ -24,6 +25,7 @@ const MainLayout = () => {
 
   const navItems = [
     { name: 'Feed', path: '/feed', icon: <Share2 size={20} /> },
+    { name: 'Chat', path: '/chat', icon: <MessageSquare size={20} /> },
     { name: 'Analytics', path: '/analytics', icon: <BarChart3 size={20} /> },
     { name: 'My Profile', path: '/profile', icon: <User size={20} /> },
     { name: 'Settings', path: '/settings', icon: <Settings size={20}/> },
