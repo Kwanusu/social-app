@@ -24,6 +24,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import EmojiSelector from './emojiselector';
 
 // --- Sub-Component: Individual Message ---
 const Message = ({ message }) => {
@@ -177,6 +178,10 @@ function ChatBox() {
 
     const filteredMessages = messages.filter(m => m.text?.toLowerCase().includes(searchTerm.toLowerCase()));
 
+    const addEmoji = (emoji) => {
+        setInput((prev) => prev + emoji);
+        };
+
     return (
         <div className="flex flex-col h-[650px] w-full max-w-2xl mx-auto border rounded-2xl bg-background shadow-2xl overflow-hidden relative">
             <Toaster />
@@ -210,12 +215,28 @@ function ChatBox() {
                     {typingUsers.length > 0 && <><Loader2 className="h-3 w-3 animate-spin"/> Someone is typing...</>}
                 </div>
                 <form onSubmit={submitMessage} className="flex gap-2 items-center">
-                    <label className="cursor-pointer hover:bg-muted p-2 rounded-full shrink-0">
+                    {/* Attachment Button */}
+                    <label className="cursor-pointer hover:bg-muted p-2 rounded-full shrink-0 transition-colors">
                         {uploading ? <Loader2 className="h-5 w-5 animate-spin"/> : <Paperclip className="h-5 w-5"/>}
                         <input type="file" className="hidden" accept="image/*" onChange={handleImageUpload} />
                     </label>
-                    <Input placeholder="Message..." value={input} onChange={handleInputChange} className="flex-1 bg-muted/50 border-none" />
-                    <Button type="submit" size="icon" disabled={!input.trim() || uploading}><SendHorizontal className="h-4 w-4"/></Button>
+
+                    {/* Input Wrapper for Input + Emoji Button */}
+                    <div className="flex-1 flex items-center bg-muted/50 rounded-lg pr-2 focus-within:ring-1 focus-within:ring-ring">
+                        <Input 
+                            placeholder="Message..." 
+                            value={input} 
+                            onChange={handleInputChange} 
+                            className="flex-1 bg-transparent border-none shadow-none focus-visible:ring-0" 
+                        />
+                        
+                        {/* The Emoji Selector Component */}
+                        <EmojiSelector onEmojiClick={addEmoji} />
+                    </div>
+
+                    <Button type="submit" size="icon" disabled={!input.trim() || uploading}>
+                        <SendHorizontal className="h-4 w-4"/>
+                    </Button>
                 </form>
             </div>
         </div>
