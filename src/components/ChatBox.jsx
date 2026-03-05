@@ -26,7 +26,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import EmojiSelector from './EmojiSelector';
 
-// --- Sub-Component: Individual Message ---
 const Message = ({ message }) => {
     const [user] = useAuthState(auth);
     const isMe = message.uid === user?.uid;
@@ -107,7 +106,6 @@ const Message = ({ message }) => {
     );
 };
 
-// --- Main Component: ChatBox ---
 function ChatBox() {
     const [user] = useAuthState(auth);
     const [messages, setMessages] = useState([]);
