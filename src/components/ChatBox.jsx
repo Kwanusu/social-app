@@ -24,7 +24,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import EmojiSelector from './emojiselector';
+import EmojiSelector from './EmojiSelector';
 
 // --- Sub-Component: Individual Message ---
 const Message = ({ message }) => {
